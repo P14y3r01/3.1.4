@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="EN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+
+    <title>ADMIN PANEL TEST</title>
+
+
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
+    <div class="nav justify-content-left">
+        <span class="navbar-text" id="info">
+        </span>
+    </div>
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{'/logout'}" style="color: #a2a2a2">Logout</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="modal fade" id="someDefaultModal" tabindex="-1" role="dialog" aria-labelledby="someDefaultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center" >
+
+            </div>
+            <div class="modal-footer">
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <div class="row mt-3" >
+        <div class="p-0 col-2 bg-light">
+                <ul class="nav flex-column nav-pills pt-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <li>
+
+                    <a sec:authorize ="hasRole('ROLE_ADMIN')" class="nav-link" id="adminTab"
+                       href="#tabUsersTable" data-toggle="tab">Admin</a>
+                    </li>
+                    <li>
+                    <a class="nav-link" id="userTab"
+                       href="#userTable" data-toggle="tab">User</a>
+                    </li>
+                </ul>
+
+        </div>
+
+        <div class="col-10 mt-2 ">
+
+            <div class="container-fluid">
+                <h1 className="h1 a1" id="h1a1"></h1>
+                    <ul sec:authorize="hasRole('ROLE_ADMIN')" class="nav nav-tabs" >
+                    <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab"  href="#tabUsersTable" >Users table</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab"  href="#newUser">New User</a>
+                    </li>
+                </ul>
+                <div class="tab-content" >
+                    <div sec:authorize="hasAnyRole('ROLE_ADMIN')" class="tab-pane fade show active"  id="tabUsersTable">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4> All users</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-center">
+                                <div>
+                                <table  class="table table-hover table-striped" id="tableAllUsers">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>NAME</th>
+                                            <th>SURNAME</th>
+                                            <th>AGE</th>
+                                            <th>USERNAME</th>
+                                            <th>USER ROLE</th>
+                                            <th>EDIT</th>
+                                            <th>DELETE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody  >
+                                    </tbody>
+
+                                </table>
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="tab-pane fade" id="userTable">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="navbar-brand">About user</div>
+                        </nav>
+                        <div>
+                            <table class="table table-striped" id="tableUser" >
+                                <thead>
+                                <tr>
+                                    <th>UserId</th>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Age</th>
+                                    <th>Role</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tap-pane fade" id="newUser">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4> Add new user</h4>
+                            </div>
+                                <div class="col-md bg-white border">
+
+                                            <form id="newUserForm"   class="offset-md-4 col-md-3 mt-4 mb-5 text-center">
+                                                <div class="form-group">
+                                                    <label for="nameCreate" class="com-form-label">Name</label>
+                                                    <input type="text" class="form-control" id="nameCreate">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="surnameCreate" class="com-form-label">Surname</label>
+                                                    <input type="text" class="form-control" id="surnameCreate">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="ageCreate" class="com-form-label">Age</label>
+                                                    <input type="number" class="form-control" id="ageCreate">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="usernameCreate" class="com-form-label">Username</label>
+                                                    <input type="text" class="form-control" id="usernameCreate">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="passwordCreate" class="com-form-label">Password</label>
+                                                    <input type="text" class="form-control" id="passwordCreate">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="rolesCreate" class="com-form-label">Role:</label>
+                                                    <select multiple id="rolesCreate" class="form-control select" size="2" required>
+                                                        <option value="ROLE_ADMIN">ADMIN</option>
+                                                        <option value="ROLE_USER">USER</option>
+
+
+                                                    </select>
+                                                    <div class="p-2">
+                                                        <button th:type="submit" class="btn btn-success" id="addUser">Add New User</button>
+                                                    </div>
+
+                                                </div>
+                                            </form>
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+<script src="/js/api.js" ></script>
+
+</html>
